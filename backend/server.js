@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js'
 import transactionRoutes from './routes/transactionRoutes.js'
 import rewardsRoutes from './routes/rewardRoutes.js';
+import configRoutes from './routes/configRoutes.js'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import connectDB from './config/db.js';
 import cookieParser from "cookie-parser";
@@ -23,6 +24,7 @@ app.use(express.urlencoded({extended: true}));
 app.use('/api/users', userRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/rewards', rewardsRoutes);
+app.use('/api/config', configRoutes)
 
 app.get('/', (req, res) => res.send("server is ready"));
 

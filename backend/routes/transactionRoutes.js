@@ -6,7 +6,7 @@ import {
     getAllTransactions,
     getTransactionById,
     updateTransactionById,
-    getAllTransactionsByUserId
+    getAllTransactionsByUserEmail
 } from "../controllers/transactionController.js"
 
 const router = express.Router();
@@ -18,6 +18,6 @@ router
     .route('/:id')
     .get(protect, admin, getTransactionById)
     .put(protect, admin, updateTransactionById);
-router.get('/user/:id', protect, admin, getAllTransactionsByUserId);
+router.get('/user/:email', protect, admin, getAllTransactionsByUserEmail);
 
 export default router;

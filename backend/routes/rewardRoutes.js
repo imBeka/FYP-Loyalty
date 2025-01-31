@@ -1,14 +1,22 @@
 import express from 'express';
+import {
+    createReward,
+    getAllRewards,
+    getRewardById,
+    updateRewardById,
+    deleteRewardById,
+} from '../controllers/rewardController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
-import { createReward, deleteReward, getAllRewards, getRewardById, updateRewardById } from '../controllers/rewardController.js'
 
 const router = express.Router();
 
-router.get('/', getAllRewards);
-router.post('/create', protect, admin, createReward);
-router.route('/:id')
-                    .get(getRewardById)
-                    .put(protect, admin, updateRewardById)
-                    .delete(protect, admin, deleteReward)
+// Public routes
+router.route('/').get(getAllRewards);
+router.route('/:id').get(getRewardById);
+
+// Admin-protected routes
+router.route('/').post(protect, admin, createReward);
+router.route('/:id').put(protect, admin, updateRewardById);
+router.route('/:id').delete(protect, admin, deleteRewardById);
 
 export default router;
