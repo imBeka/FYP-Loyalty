@@ -5,6 +5,7 @@ const user = JSON.parse(localStorage.getItem('user'))
 
 const initialState = {
     user: user ? user : null,
+    users: [],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -14,7 +15,11 @@ const initialState = {
 // User register
 export const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
     try {
-        return await authService.register(user)
+        const response =  await authService.register(user)
+
+        localStorage.setItem('user', JSON.stringify(response))
+        
+        return response
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
@@ -29,6 +34,49 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     try {
         return await authService.login(user)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// Get all users
+export const getAllUsers = createAsyncThunk('users/getAll', async (_, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await authService.getAllUsers(token)
+    } catch (error) {
+        const message =
+            (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+export const updateUserByEmail = createAsyncThunk('users/updateByEmail', async (userData, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        await authService.updateUserByEmail(userData, token)
+        return await authService.getAllUsers(token) 
+    } catch (error) {
+        const message =
+            (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+export const addUser = createAsyncThunk('users/addUser', async (userData, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        await authService.register(user)
+        return await authService.getAllUsers(token)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
@@ -79,9 +127,38 @@ export const authSlice = createSlice({
             state.message = action.payload
             state.user = null
             })
-            
+            .addCase(getAllUsers.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getAllUsers.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.users = action.payload
+            })
+            .addCase(getAllUsers.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+            state.users = []
+            })
+            .addCase(updateUserByEmail.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(updateUserByEmail.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.users = action.payload
+            })
+            .addCase(updateUserByEmail.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+            state.users = []
+            })
     }
 })
+
+
 
 export const {reset} = authSlice.actions
 export default authSlice.reducer

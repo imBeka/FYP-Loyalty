@@ -9,7 +9,7 @@ import PointsConfiguration from '../models/systemConfigModel.js';
 // @access  Private/Admin
 const getAllTransactions = asyncHandler(async (req, res) => {
     const transactions = await Transaction.find({});
-    res.json(transactions);
+    res.json(transactions.sort((a, b) => b.createdAt - a.createdAt));
 });
 
 // @desc    Get all transactions of a given user by email
@@ -60,6 +60,8 @@ const addTransactionRedeem = asyncHandler(async (req, res) => {
     // Create the redemption transaction
     const transaction = await Transaction.create({
         userId: user._id,
+        userEmail: user.email,
+        userName: user.name,
         type: 'redemption',
         pointsRedeemed: reward.pointsRequired,
         rewardId,
@@ -104,6 +106,8 @@ const addTransactionEarn = asyncHandler(async (req, res) => {
     // Create the earn transaction
     const transaction = await Transaction.create({
         userId: user._id,
+        userEmail: user.email,
+        userName: user.name,
         type: 'purchase',
         amount,
         pointsEarned,

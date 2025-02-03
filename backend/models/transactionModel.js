@@ -7,6 +7,16 @@ const transactionSchema = mongoose.Schema(
       required: true,
       ref: 'User',
     },
+    userEmail: {
+      type: String,
+      required: true,
+      ref: 'User',
+    },
+    userName: {
+      type: String,
+      required: true,
+      ref: 'User'
+    },
     type: {
       type: String,
       required: true,
@@ -14,7 +24,6 @@ const transactionSchema = mongoose.Schema(
     },
     amount: {
       type: Number,
-      required: true
     },
     pointsEarned: {
       type: Number,
@@ -26,7 +35,6 @@ const transactionSchema = mongoose.Schema(
     },
     rewardId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: 'Reward',
     },
     description: {

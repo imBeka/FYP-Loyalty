@@ -5,6 +5,7 @@ import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import 'antd/dist/reset.css'; // Import Ant Design's CSS styles
 
 const container = document.getElementById('root');
 const root = createRoot(container);

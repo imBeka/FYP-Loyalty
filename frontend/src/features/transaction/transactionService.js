@@ -3,6 +3,7 @@ import axios from "axios";
 const API_URL = '/api/transactions'
 
 const createTransactionEarn = async (transactionData, token) => {
+    
     const config = {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -50,14 +51,15 @@ const getTransactionById = async (transactionId, token) => {
     return response.data
 }
 
-const updatedTransaction = async (transactionData, token) => {
+const updatedTransaction = async (transactionData, token) => {    
+
     const config = {
         headers: {
             Authorization: `Bearer ${token}`,
         },
     }
 
-    const response = await axios.put(`${API_URL}/${transactionData.id}`, transactionData, config)
+    const response = await axios.put(`${API_URL}/${transactionData._id}`, transactionData, config)
 
     return response.data
 }

@@ -108,6 +108,38 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      points: updatedUser.points,
+      isAdmin: updatedUser.isAdmin,
+      token: generateToken(updatedUser._id),
+    })
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
+
+// @desc    Update user profile
+// @route   PUT /api/users/:email
+// @access  Private/Admin
+const updateUserProfileByEmail = asyncHandler(async (req, res) => {
+  const user = await User.findOne({email: req.params.email})
+
+  if (user) {
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+    user.points = req.body.points || user.points
+    user.isAdmin = req.body.isAdmin || user.isAdmin
+    if (req.body.password) {
+      user.password = req.body.password
+    }
+
+    const updatedUser = await user.save()
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      points: updatedUser.points,
       isAdmin: updatedUser.isAdmin,
       token: generateToken(updatedUser._id),
     })
@@ -189,4 +221,5 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  updateUserProfileByEmail,
 }

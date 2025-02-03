@@ -1,0 +1,11 @@
+ADMIN of a coffee shop is setting up the system, i.e. how many points USER gets for spending some money. For example ADMIN can set the system to provide USER with 5 POINTS for each 10 pounds spent.
+ADMIN also creates REWARDS that users can exchange for their POINTS. He sets name, description, cost (points required) etc.
+
+A client (USER) comes to the store, buys a cup of coffee and tells the cashier (ADMIN) his [EMAIL | PHONE]
+The ADMIN creates a TRANSACTION in the SYSTEM, entering details like SUM (of the purchase), [EMAIL | PHONE] (of the client), [DESCRIPTION] (optional)
+The SYSTEM does its job by calculating the amount of points USER gets considering the SUM of his purchase and ADDs POINTS to USER account
+
+In the app, user sees all the REWARDS. Some of the REWARDS might be unavailable for him due to lack of POINTS.
+When user accumulated sufficient amount of POINTS, he comes to the cashier and tells him [EMAIL | PHONE] as well as the REWARD he wants.
+ADMIN creates a new TRANSACTION entering the USERS [EMAIL | PHONE] and REWARD wanted.
+The SYSTEM does its job and subtracts the POINTS from the USER
