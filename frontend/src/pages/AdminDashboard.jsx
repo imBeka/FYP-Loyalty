@@ -12,6 +12,8 @@ import ManageUsers from "../components/ManageUsers";
 import ManageRewards from "../components/ManageRewards";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import ManageConfig from "../components/ManageConfig";
+import Analytics from "../components/Analytics";
 
 const { Header, Sider, Content } = Layout;
 
@@ -67,7 +69,7 @@ export default function AdminDashboard() {
         case "rewards":
             return <ManageRewards onEdit={showModal} />;
         case "settings":
-            return <Settings />;
+            return <ManageConfig />;
         default:
             return null;
         }
@@ -117,16 +119,11 @@ export default function AdminDashboard() {
 // Component: Manage Transactions
 
 // Component: Analytics
-const Analytics = () => {
-  return <div>Analytics Section (Charts go here)</div>;
-};
+// const Analytics = () => {
+//   return <div>Analytics Section (Charts go here)</div>;
+// };
 
 // Component: Manage Rewards
 // const ManageRewards = ({ onEdit }) => {
 //   return <div>Manage Rewards Section</div>;
 // };
-
-// Component: Settings
-const Settings = () => {
-  return <div>Settings Section</div>;
-};

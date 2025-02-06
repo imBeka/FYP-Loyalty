@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Form, Input, message } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { reset, getTransactions, updatedTransaction } from "../features/transaction/transactionSlice";
+import { getTransactions, updatedTransaction } from "../features/transaction/transactionSlice";
 import Spinner from "./Spinner";
 
 const ManageTransactions = () => {
@@ -18,9 +18,9 @@ const ManageTransactions = () => {
     dispatch(getTransactions());
 
     // Cleanup function (optional)
-    return () => {
-      dispatch(reset()); // Reset the transaction state if needed
-    };
+    // return () => {
+    //   dispatch(reset()); // Reset the transaction state if needed
+    // };
   }, [dispatch]);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -30,7 +30,6 @@ const ManageTransactions = () => {
   const handleEdit = (record) => {
     form.setFieldsValue(record);
     setEditingTransaction(record);
-    // console.log(record)
     setIsModalVisible(true);
   };
 
