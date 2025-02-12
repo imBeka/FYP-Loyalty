@@ -13,7 +13,7 @@ import ManageRewards from "../components/ManageRewards";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ManageConfig from "../components/ManageConfig";
-import Analytics from "../components/Analytics";
+import Statistics from "../components/Statistics";
 
 const { Header, Sider, Content } = Layout;
 
@@ -22,7 +22,7 @@ const MENU_ITEMS = [
     { key: "transactions", icon: <TransactionOutlined />, label: "Transactions" },
     { key: "users", icon: <UserOutlined />, label: "Users" },
     { key: "rewards", icon: <GiftOutlined />, label: "Rewards" },
-    { key: "analytics", icon: <PieChartOutlined />, label: "Analytics" },
+    { key: "statistics", icon: <PieChartOutlined />, label: "Statistics" },
     { key: "settings", icon: <SettingOutlined />, label: "Settings" },
 ];
 
@@ -64,8 +64,8 @@ export default function AdminDashboard() {
             return <ManageTransactions onEdit={showModal} />;
         case "users":
             return <ManageUsers onEdit={showModal} />;
-        case "analytics":
-            return <Analytics />;
+        case "statistics":
+            return <Statistics />;
         case "rewards":
             return <ManageRewards onEdit={showModal} />;
         case "settings":
@@ -115,15 +115,3 @@ export default function AdminDashboard() {
         </Layout>
     );
 }
-
-// Component: Manage Transactions
-
-// Component: Analytics
-// const Analytics = () => {
-//   return <div>Analytics Section (Charts go here)</div>;
-// };
-
-// Component: Manage Rewards
-// const ManageRewards = ({ onEdit }) => {
-//   return <div>Manage Rewards Section</div>;
-// };

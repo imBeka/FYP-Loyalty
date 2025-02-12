@@ -83,6 +83,22 @@ export const addUser = createAsyncThunk('users/addUser', async (userData, thunkA
     }
 })
 
+// Get profile
+export const getUserProfile = createAsyncThunk('users/getProfile', async (_, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await authService.getUserProfile(token)
+    } catch (error) {
+        const message =
+            (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -154,6 +170,19 @@ export const authSlice = createSlice({
             state.isError = true
             state.message = action.payload
             state.users = []
+            })
+            .addCase(getUserProfile.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getUserProfile.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.user = action.payload
+            })
+            .addCase(getUserProfile.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
             })
     }
 })
